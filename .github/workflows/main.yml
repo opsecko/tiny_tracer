@@ -25,7 +25,7 @@ jobs:
         mv pin-3.30-98830-g1d7b601b3-msvc-windows pin
           
     - name: MoveTq
-      run: xcopy ${{env.GITHUB_WORKSPACE}} c:\pin\source\tools\
+      run: xcopy D:\a\tiny_tracer c:\pin\source\tools\
 
     - name: Build
       working-directory: c:\pin\source\tools\
