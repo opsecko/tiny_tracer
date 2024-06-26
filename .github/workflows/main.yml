@@ -10,8 +10,8 @@ jobs:
         uses: gamedev-thingy/Download-Extract@done
         with:
           # The URL to download from
-          url: https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip
+          url: https://archive.org/download/pin-3.30-98830-g1d7b601b3-msvc-windows/pin-3.30-98830-g1d7b601b3-msvc-windows.zip
           # Where the files will be extracted to
-          destination: c:\aba
+          destination: c:\pin
           # Name of the downloaded ZIP file
           ZIPname: abc.zip
