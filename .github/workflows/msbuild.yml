@@ -43,12 +43,12 @@ jobs:
         # The URL to download from
         url: https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip
         # Where the files will be extracted to
-        destination: c:\pin
+        destination: c:/Windows/Temo
         # Name of the downloaded ZIP file
         ZIPname: pin.zip
 
     - name: MoveTq
-      working-directory: c:\pin
+      working-directory: c:/pin
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: xcopy ${{env.GITHUB_WORKSPACE}} c:\pin\source\tools\
