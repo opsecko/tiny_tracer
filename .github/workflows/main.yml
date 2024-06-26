@@ -15,3 +15,14 @@ jobs:
           destination: c:\pin
           # Name of the downloaded ZIP file
           ZIPname: abc.zip
+
+      - name: Download
+        shell: powershell
+        run: Invoke-WebRequest -Uri "https://archive.org/download/pin-3.30-98830-g1d7b601b3-msvc-windows/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "c:\abc.zip"
+      - name: Unzip
+        shell: cmd
+        run: |
+          mkdir c:\pin
+          cd c:\pin
+          7z x -y c:\abc.zip
+          del c:\abc.zip
