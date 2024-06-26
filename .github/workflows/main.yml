@@ -7,8 +7,6 @@ jobs:
     runs-on: windows-2019
     
     steps:
-    - uses: actions/checkout@v4
-
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
@@ -25,10 +23,10 @@ jobs:
         mv pin-3.30-98830-g1d7b601b3-msvc-windows pin
           
     - name: MoveTq
-      run: xcopy D:\a\tiny_tracer c:\pin\source\tools\
+      run: git clone https://github.com/opsecko/tiny_tracer.git c:\pin\source\tools\tiny_tracer
 
     - name: Build
-      working-directory: c:\pin\source\tools\
+      working-directory: c:\pin\source\tools\tiny_tracer
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} c:\pin\source\tools\tiny_tracer\TinyTracer.vcxproj  
