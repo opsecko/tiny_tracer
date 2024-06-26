@@ -1,0 +1,17 @@
+name: TestDemo
+on: push
+
+jobs:
+  my-job:
+    name: Fisrt Job
+    runs-on: windows-2019
+    steps:
+      - name: Download & Extract
+        uses: gamedev-thingy/Download-Extract@done
+        with:
+          # The URL to download from
+          url: https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip
+          # Where the files will be extracted to
+          destination: c:\aba
+          # Name of the downloaded ZIP file
+          ZIPname: abc.zip
