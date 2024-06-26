@@ -19,15 +19,12 @@ jobs:
     - name: Unzip
       shell: cmd
       run: |
-        mkdir c:\pin
-        cd c:\pin
+        cd c:
         7z x -y c:\abc.zip
         del c:\abc.zip
+        mv pin-3.26-98690-g1fc9d60e6-msvc-windows pin
           
     - name: MoveTq
-      working-directory: c:\pin
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: xcopy ${{env.GITHUB_WORKSPACE}} c:\pin\source\tools\
 
     - name: Build
@@ -35,6 +32,3 @@ jobs:
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} c:\pin\source\tools\tiny_tracer\TinyTracer.vcxproj  
-
-      
-
