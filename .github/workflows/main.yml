@@ -22,7 +22,7 @@ jobs:
         cd c:
         7z x -y c:\abc.zip
         del c:\abc.zip
-        mv pin-3.26-98690-g1fc9d60e6-msvc-windows pin
+        mv pin-3.30-98830-g1d7b601b3-msvc-windows pin
           
     - name: MoveTq
       run: xcopy ${{env.GITHUB_WORKSPACE}} c:\pin\source\tools\
