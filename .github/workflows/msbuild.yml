@@ -36,8 +36,11 @@ jobs:
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+      
+    - name: createDir
+      run: mkdir c:\pin
 
-
+    - name: downloadFile
     - uses: gamedev-thingy/Download-Extract@done
       with:
         # The URL to download from
