@@ -6,16 +6,6 @@ jobs:
     name: Fisrt Job
     runs-on: windows-2019
     steps:
-      - name: Download & Extract
-        uses: gamedev-thingy/Download-Extract@done
-        with:
-          # The URL to download from
-          url: https://archive.org/download/pin-3.30-98830-g1d7b601b3-msvc-windows/pin-3.30-98830-g1d7b601b3-msvc-windows.zip
-          # Where the files will be extracted to
-          destination: c:\pin
-          # Name of the downloaded ZIP file
-          ZIPname: abc.zip
-
       - name: Download
         shell: powershell
         run: Invoke-WebRequest -Uri "https://archive.org/download/pin-3.30-98830-g1d7b601b3-msvc-windows/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "c:\abc.zip"
