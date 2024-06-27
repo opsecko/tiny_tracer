@@ -26,7 +26,6 @@ jobs:
       run: git clone https://github.com/opsecko/tiny_tracer.git c:\pin\source\tools\tiny_tracer
 
     - name: Build
-      working-directory: c:\pin\source\tools\tiny_tracer
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=Release /p:PlatformTarget=x64 /p:PlatformToolset=v142 c:\pin\source\tools\tiny_tracer\TinyTracer.vcxproj  
+      run: |
+        cd c:\pin\source\tools\tiny_tracer
+        msbuild /m /p:Configuration=Release /p:PlatformTarget=x64 /p:PlatformToolset=v142 c:\pin\source\tools\tiny_tracer\TinyTracer.vcxproj  
