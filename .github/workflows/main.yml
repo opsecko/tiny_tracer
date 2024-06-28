@@ -20,7 +20,7 @@ jobs:
         cd c:
         7z x -y c:\abc.zip
         del c:\abc.zip
-        mv pin-3.30-98830-g1d7b601b3-msvc-windows pin
+        move pin-3.30-98830-g1d7b601b3-msvc-windows pin
         dir c:\pin\source\tools
           
     - name: MoveTq
