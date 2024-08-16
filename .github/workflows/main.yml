@@ -1,6 +1,5 @@
-name: build_pintool
+name: TestDemo
 on: push
-
 jobs:
   my-job:
     name: Fisrt Job
@@ -9,40 +8,45 @@ jobs:
     steps:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
-
-    - name: Download Pin
+    - name: Download
+      shell: powershell
+      run: Invoke-WebRequest -Uri "https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "c:\abc.zip"
+      
+    - name: Unzip
+      shell: cmd
       run: |
-          Invoke-WebRequest -Uri "https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "C:\pin.zip" -UseBasicParsing
-    - name: Extract Pin
-      run: |
-          Expand-Archive -Path "C:\pin.zip" -DestinationPath "C:\" -Force
-          Rename-Item -Path "C:\pin-3.30-98830-g1d7b601b3-msvc-windows" -NewName "C:\pin"
+        cd c:
+        7z x -y c:\abc.zip -oc:
+        move c:\pin-3.30-98830-g1d7b601b3-msvc-windows c:\pin
+        dir c:\pin\source\tools
           
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      with:
-          path: c:\pin\source\tools\tiny_tracer
-
+    - name: MoveTq
+      run: git clone https://github.com/opsecko/tiny_tracer.git c:\pin\source\tools\tiny_tracer
     - name: Build X64
       run: |
-        msbuild /m /p:Configuration=Release /p:PlatformTarget=x64 /p:PlatformToolset=v142 c:\pin\source\tools\tiny_tracer\TinyTracer.vcxproj  
+        cd c:\pin\source\tools\tiny_tracer
+        msbuild /m /p:Configuration=Release /p:PlatformTarget=x64 /p:PlatformToolset=v142 TinyTracer.vcxproj  
         
     - name: Build X86
       run: |
-        msbuild /m /p:Configuration=Release /p:PlatformTarget=x86 /p:PlatformToolset=v142 c:\pin\source\tools\tiny_tracer\TinyTracer.vcxproj  
+        cd c:\pin\source\tools\tiny_tracer
+        msbuild /m /p:Configuration=Release /p:PlatformTarget=x86 /p:PlatformToolset=v142 TinyTracer.vcxproj  
         
     - name: move file
+      run: cmd /c c:\pin\source\tools\tiny_tracer\move_dlls.bat
       run: |
         move  c:\pin\source\tools\tiny_tracer\Release\TinyTracer.dll c:\pin\source\tools\tiny_tracer\install32_64\TinyTracer32.dll
         move  c:\pin\source\tools\tiny_tracer\64\Release\TinyTracer.dll c:\pin\source\tools\tiny_tracer\install32_64\TinyTracer64.dll
-        Compress-Archive -Path "c:\pin\source\tools\tiny_tracer\install32_64*" -DestinationPath "C:\tiny_tracer.zip"
-  
+        
+    - name: out
+      run: |
+       7z a -tzip c:\out.zip c:\abc.zip c:\pin\source\tools\tiny_tracer\install32_64
+       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.3
       with:
         # Artifact name
         name: installer32_64
         # A file, directory or wildcard pattern that describes what to upload
-        path: c:\tiny_tracer.zip
+        path: c:\out.zip
         # The desired behavior if no files are found using the provided path.
-
