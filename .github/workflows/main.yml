@@ -12,7 +12,7 @@ jobs:
 
     - name: Download Pin
       run: |
-          Invoke-WebRequest -Uri "https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "C:\pin.zip"
+          Invoke-WebRequest -Uri "https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "C:\pin.zip" -UseBasicParsing
     - name: Extract Pin
       run: |
           Expand-Archive -Path "C:\pin.zip" -DestinationPath "C:\" -Force
