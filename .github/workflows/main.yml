@@ -12,10 +12,11 @@ jobs:
 
     - name: Download Pin
       run: |
-          Invoke-WebRequest -Uri "https://archive.org/download/pin-3.30-98830-g1d7b601b3-msvc-windows/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "C:\pin.zip"
+          Invoke-WebRequest -Uri "https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "C:\pin.zip"
     - name: Extract Pin
       run: |
           Expand-Archive -Path "C:\pin.zip" -DestinationPath "C:\" -Force
+          Rename-Item -Path "C:\pin-3.30-98830-g1d7b601b3-msvc-windows" -NewName "C:\pin"
           
     - name: Checkout Code
       uses: actions/checkout@v3
