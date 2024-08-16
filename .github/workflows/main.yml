@@ -6,7 +6,49 @@ jobs:
     runs-on: windows-2019
     
     steps:
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+      
     - name: Download
       shell: powershell
-      run: Invoke-WebRequest -Uri "https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.30-98830-g1d7b601b3-msvc-windows.zip" -OutFile "c:\abc.zip"
+      run: git clone https://github.com/opsecko/justsavepintool.git c:\tmp
       
+    - name: Unzip
+      shell: cmd
+      run: |
+        cd c:
+        7z x -y c:\tmp\pin.7z -oc:\
+        dir c:\pin\source\tools
+
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      with:
+          path: c:\pin\source\tools\tiny_tracer
+          
+    - name: Build X64
+      run: |
+        cd c:\pin\source\tools\tiny_tracer
+        msbuild /m /p:Configuration=Release /p:PlatformTarget=x64 /p:PlatformToolset=v142 TinyTracer.vcxproj  
+        
+    - name: Build X86
+      run: |
+        cd c:\pin\source\tools\tiny_tracer
+        msbuild /m /p:Configuration=Release /p:PlatformTarget=x86 /p:PlatformToolset=v142 TinyTracer.vcxproj  
+        
+    - name: move file
+      run: |
+        move  c:\pin\source\tools\tiny_tracer\Release\TinyTracer.dll c:\pin\source\tools\tiny_tracer\install32_64\TinyTracer32.dll
+        move  c:\pin\source\tools\tiny_tracer\64\Release\TinyTracer.dll c:\pin\source\tools\tiny_tracer\install32_64\TinyTracer64.dll
+        
+    - name: out
+      run: |
+       7z a -tzip c:\out.zip c:\abc.zip c:\pin\source\tools\tiny_tracer\install32_64
+       
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.3
+      with:
+        # Artifact name
+        name: installer32_64
+        # A file, directory or wildcard pattern that describes what to upload
+        path: c:\out.zip
+        # The desired behavior if no files are found using the provided path.
