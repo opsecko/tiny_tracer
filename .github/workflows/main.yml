@@ -20,10 +20,8 @@ jobs:
         7z x -y c:\tmp\pin.7z -oc:\
         dir c:\pin\source\tools
 
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      with:
-          path: c:\pin\source\tools\tiny_tracer
+    - name: MoveTq
+      run: git clone https://github.com/opsecko/tiny_tracer.git c:\pin\source\tools\tiny_tracer
           
     - name: Build X64
       run: |
