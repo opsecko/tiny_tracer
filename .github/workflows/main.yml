@@ -33,7 +33,6 @@ jobs:
         msbuild /m /p:Configuration=Release /p:PlatformTarget=x86 /p:PlatformToolset=v142 TinyTracer.vcxproj  
         
     - name: move file
-      run: cmd /c c:\pin\source\tools\tiny_tracer\move_dlls.bat
       run: |
         move  c:\pin\source\tools\tiny_tracer\Release\TinyTracer.dll c:\pin\source\tools\tiny_tracer\install32_64\TinyTracer32.dll
         move  c:\pin\source\tools\tiny_tracer\64\Release\TinyTracer.dll c:\pin\source\tools\tiny_tracer\install32_64\TinyTracer64.dll
